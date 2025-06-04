@@ -9,6 +9,11 @@ export class TypeOrmUserRepository implements UserRepository {
     @InjectRepository(UserEntity)
     private readonly ormRepository: Repository<UserEntity>,
   ) {}
+  async deleteById(id: number): Promise<boolean> {
+    const result = await this.ormRepository.delete(id);
+
+    return (result.affected ?? 0) > 0;
+  }
 
   async findAll(): Promise<User[]> {
     const userEntities = await this.ormRepository.find();
