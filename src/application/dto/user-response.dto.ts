@@ -1,15 +1,19 @@
 import { User } from '../../domain/entities/user.entity';
 
 export class UserResponseDto {
-  id: number;
-  name: string;
-  email: string;
+  constructor(
+    private readonly id: number,
+    private readonly name: string,
+    private readonly email: string,
+  ) {}
 
   static fromDomain(user: User): UserResponseDto {
-    const dto: UserResponseDto = new UserResponseDto();
-    dto.id = user.id;
-    dto.name = user.name;
-    dto.email = user.email;
+    const dto: UserResponseDto = new UserResponseDto(
+      user.id,
+      user.name,
+      user.email,
+    );
+
     return dto;
   }
 }

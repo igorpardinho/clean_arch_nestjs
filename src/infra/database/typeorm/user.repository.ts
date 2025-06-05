@@ -21,9 +21,10 @@ export class TypeOrmUserRepository implements UserRepository {
     return userEntities.map((entity) => this.toDomainEntity(entity));
   }
 
-  async create(user: User): Promise<void> {
+  async create(user: User): Promise<User> {
     const userEntity: UserEntity = this.toTypeOrmEntity(user);
-    await this.ormRepository.save(userEntity);
+    const saved = await this.ormRepository.save(userEntity);
+    return this.toDomainEntity(saved);
   }
 
   async findOne(id: number): Promise<User | null> {
